@@ -47,11 +47,13 @@ struct Array
         if(length == size){
             increaseSize();
         }
-        for(int i=length; i>index; i--){
-            arr[i] = arr[i-1];
+        if(index >= 0 && index < length){
+            for(int i=length; i>index; i--){
+                arr[i] = arr[i-1];
+            }
+            arr[index] = val;
+            length++;
         }
-        arr[index] = val;
-        length++;
     }
     
     void push_back(int val){
@@ -62,12 +64,44 @@ struct Array
         length++;
     }
 
+    void pop_back(){
+        length--;
+    }
+
+    void delete_at(int index){
+        if(index >= 0 && index < length){
+            for(int i=index; i<length-1; i++){
+                arr[i] = arr[i+1];
+            }
+            length--;
+        }
+    }
+
     void reverse(){
         for(int i=0; i<length/2; i++){
             int temp = arr[i];
             arr[i] = arr[length-i-1];
             arr[length-i-1] = temp;
         }
+    }
+
+    int linear_search(int key){
+        for(int i=0; i<length; i++){
+            if(arr[i] == key){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    int max(){
+        int ans = arr[0];
+        for(int i=1; i<length; i++){
+            if(arr[i] > ans){
+                ans = arr[i];
+            }
+        }
+        return ans;
     }
 
     ~Array(){
